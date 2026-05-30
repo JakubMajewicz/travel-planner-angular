@@ -1,0 +1,60 @@
+.calendar-header {
+  display: grid;
+  grid-template-columns: repeat(7, 1fr);
+  background: white;
+  border: 1px solid #dee2e6;
+  border-bottom: none;
+}
+
+.calendar-header div {
+  padding: 12px;
+  text-align: center;
+  font-weight: 600;
+  border-right: 1px solid #dee2e6;
+}
+
+.calendar-month {
+  display: grid;
+  grid-template-columns: repeat(7, 1fr);
+  background: white;
+  border: 1px solid #dee2e6;
+}
+
+.calendar-day {
+  min-height: 140px;
+  border-right: 1px solid #dee2e6;
+  border-bottom: 1px solid #dee2e6;
+  padding: 8px;
+  cursor: pointer;
+  overflow-y: auto;
+}
+
+.calendar-day:hover {
+  background: #f8f9fa;
+}
+
+.day-number {
+  font-weight: bold;
+  margin-bottom: 8px;
+}
+
+.trip-card {
+  position: relative;
+  background: #0dcaf0;
+  color: white;
+  border-radius: 6px;
+  padding: 6px;
+  margin-bottom: 4px;
+}
+
+.trip-card .btn-close {
+  position: absolute;
+  top: 4px;
+  right: 4px;
+  transform: scale(0.7);
+}
+
+.empty {
+  background: #f8f9fa;
+  cursor: default;
+}

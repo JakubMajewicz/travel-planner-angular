@@ -1,0 +1,81 @@
+<div class="container-fluid p-0 vh-100 overflow-hidden">
+  <div class="row g-0 h-100">
+    <aside class="col-auto bg-dark text-white p-3 d-flex flex-column" style="width: 220px">
+      <div class="text-center mb-4 mt-2">
+        <h4 class="fw-bold">Travel Planner</h4>
+      </div>
+
+      <ul class="nav nav-pills flex-column mb-auto gap-1">
+        <li class="nav-item"><a class="nav-link active bg-primary" href="#">Calendar</a></li>
+      </ul>
+    </aside>
+
+    <main class="col bg-light p-4 overflow-auto">
+      <div
+        class="d-flex justify-content-between align-items-center mb-4 bg-white p-3 rounded shadow-sm border"
+      >
+        <button class="btn btn-outline-secondary" (click)="prevMonth()">← Poprzedni</button>
+
+        <h4 class="m-0">
+          {{ currentDate | date: 'LLLL yyyy' }}
+        </h4>
+
+        <button class="btn btn-outline-secondary" (click)="nextMonth()">Następny →</button>
+      </div>
+
+      <div class="calendar-header">
+        <div>Pon</div>
+        <div>Wt</div>
+        <div>Śr</div>
+        <div>Czw</div>
+        <div>Pt</div>
+        <div>Sob</div>
+        <div>Nd</div>
+      </div>
+
+      <div class="calendar-month">
+        <div
+          *ngFor="let day of monthDays"
+          class="calendar-day"
+          [class.empty]="!day"
+          (click)="day && onSlotClick(day, '00:00')"
+        >
+          <ng-container *ngIf="day">
+            <div class="day-number">
+              {{ day.getDate() }}
+            </div>
+
+            <div class="trip-card mb-1" *ngFor="let trip of getTripsForDay(day)">
+              <div class="small fw-bold text-truncate">
+                {{ trip.city }}
+              </div>
+
+              <div class="small text-muted">
+                {{ trip.country }}
+              </div>
+
+              <span class="badge bg-success mb-1"> {{ trip.cost }} PLN </span>
+
+              <div class="weather mb-2" *ngIf="getWeatherForDay(day)">
+                <img [src]="getWeatherForDay(day)?.icon" style="width: 18px; height: 18px" />
+
+                <span class="small text-muted"> {{ getWeatherForDay(day)?.temp }}°C </span>
+              </div>
+
+              <button class="btn-close" (click)="deleteTrip($event, trip.id)"></button>
+            </div>
+          </ng-container>
+        </div>
+      </div>
+    </main>
+  </div>
+</div>
+
+<app-trip-form
+  *ngIf="isFormOpen"
+  [day]="selectedDay"
+  [hour]="selectedHour"
+  (close)="closeForm()"
+  (save)="handleSaveTrip($event)"
+>
+</app-trip-form>
